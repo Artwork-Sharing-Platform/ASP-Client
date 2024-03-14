@@ -16,6 +16,7 @@ import UpgradePackagePopup from "~/components/Popup/UpgradePackagePopup";
 
 import styles from "./Pin.module.scss";
 import AccessPrivatePopup from "~/components/Popup/AccessPrivatePopup";
+import { ClipLoader } from "react-spinners";
 const cx = classNames.bind(styles);
 function Pin({ onLogout }) {
   const location = useLocation();
@@ -96,22 +97,31 @@ function Pin({ onLogout }) {
       )}
       <div className={cx("pin-wrapper")}>
         <MainHeader onLogout={onLogout} />
-        <div className={cx("pin-container")}>
-          <div className={cx("pin-content-main")}>
-            <PinDetail
-              userData={userData}
-              setShowReportPin={setShowReportPin}
-              setShowNotifyNoPackage={setShowNotifyNoPackage}
-              setShowNotifyUpgradePackage={setShowNotifyUpgradePackage}
-              setShowPrivate={setShowAccessPrivate}
-              pinInformation={pinInformation}
-              loadingShowPinInformation={loadingShowPinInformation}
-              setPackageType={setPackageType}
-              setPackageDescType={setPackageDescType}
+        {loadingShowPinInformation ? (
+          <div className={cx("loading-pin")}>
+            <ClipLoader
+              size={40}
+              color="#e60023"
+              className={cx("loading-spinner")}
             />
           </div>
-          <div className={cx("pin-related-main")}>{/* <PinRelated /> */}</div>
-        </div>
+        ) : (
+          <div className={cx("pin-container")}>
+            <div className={cx("pin-content-main")}>
+              <PinDetail
+                userData={userData}
+                setShowReportPin={setShowReportPin}
+                setShowNotifyNoPackage={setShowNotifyNoPackage}
+                setShowNotifyUpgradePackage={setShowNotifyUpgradePackage}
+                setShowPrivate={setShowAccessPrivate}
+                pinInformation={pinInformation}
+                setPackageType={setPackageType}
+                setPackageDescType={setPackageDescType}
+              />
+            </div>
+            <div className={cx("pin-related-main")}></div>
+          </div>
+        )}
       </div>
     </>
   );

@@ -28,6 +28,18 @@
       color: var(--text-color-black);
       background-color: #e4e6eb;
     }
+
+    .message-image-receive {
+      width: 200px;
+      height: fit-content;
+
+      .message-img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+    }
   }
 }
 
@@ -62,6 +74,18 @@
       line-height: 22px;
       background-color: var(--text-color-black);
       color: var(--text-color-white);
+    }
+
+    .message-image-self {
+      width: 200px;
+      height: fit-content;
+
+      .message-img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 10px;
+      }
     }
   }
 }

@@ -26,43 +26,110 @@
     }
   }
 
-  .text-input {
+  .input-container {
+    position: relative;
     flex: 1;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 20px;
-    background-color: #f0f2f5;
 
-    .input-chat {
-      width: 95%;
-      padding: 8px 12px;
-      font-size: 14px;
-      border: none;
-      outline: none;
-      overflow: hidden;
-      color: #333;
-      background-color: transparent;
+    .list-preview-image {
+      width: 100%;
+      height: 90px;
+      position: absolute;
+      bottom: 40px;
+      right: 0;
+      left: 0;
+      padding: 15px;
+      border-radius: 20px 20px 0 0;
+      background-color: #f0f2f5;
+      display: flex;
+      align-items: center;
+      column-gap: 20px;
+      overflow-x: auto;
+      overflow-y: hidden;
+
+      .load-image-preview {
+        position: relative;
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        flex-shrink: 0;
+
+        .image-preview {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 12px;
+        }
+
+        .close {
+          cursor: pointer;
+          width: 24px;
+          height: 24px;
+          position: absolute;
+          right: -8px;
+          top: -10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          background-color: var(--bg-white);
+          transition: 0.2s linear;
+
+          .close-icon {
+            font-size: 14px;
+          }
+
+          &:hover {
+            background-color: var(--button-bg-secondary);
+          }
+        }
+      }
     }
 
-    .emoji {
-      width: 5%;
+    .text-input {
+      width: 100%;
+      height: 40px;
       display: flex;
-      align-content: center;
-      justify-content: center;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 20px;
+      background-color: #f0f2f5;
 
-      .icon-emoji {
-        cursor: pointer;
-        font-size: 20px;
-        color: var(--primary);
+      .input-chat {
+        width: 95%;
+        padding: 8px 12px;
+        font-size: 14px;
+        border: none;
+        outline: none;
+        overflow: hidden;
+        color: #333;
+        background-color: transparent;
       }
+
+      .emoji {
+        width: 5%;
+        display: flex;
+        align-content: center;
+        justify-content: center;
+
+        .icon-emoji {
+          cursor: pointer;
+          font-size: 20px;
+          color: var(--primary);
+        }
+      }
+    }
+
+    .media-active {
+      border-radius: 0 0 20px 20px;
     }
   }
 
   .send-chat {
     width: fit-content;
     margin-left: 15px;
+    border: none;
+    outline: none;
+    background-color: transparent;
 
     .icon-send {
       cursor: pointer;

@@ -180,7 +180,7 @@ function MainHeader({ onLogout, type = "Search" }) {
   return (
     <div
       className={
-        type !== "NoSearch"
+        type !== "NoSearch" && type !== "Admin"
           ? cx("main-header-wrapper")
           : cx("main-header-wrapper", "no-search")
       }
@@ -213,22 +213,24 @@ function MainHeader({ onLogout, type = "Search" }) {
             </div>
           </Link>
 
-          <div className={cx("header-nav")}>
-            {headerNav.map((nav) => {
-              const isActive = location.pathname === nav.path;
-              return (
-                <div
-                  key={nav.id}
-                  className={cx(isActive ? "nav-item-active" : "nav-item")}
-                  onClick={() => handleNavItemClick(nav.path)}
-                >
-                  {nav.title}
-                </div>
-              );
-            })}
-          </div>
+          {type !== "Admin" && (
+            <div className={cx("header-nav")}>
+              {headerNav.map((nav) => {
+                const isActive = location.pathname === nav.path;
+                return (
+                  <div
+                    key={nav.id}
+                    className={cx(isActive ? "nav-item-active" : "nav-item")}
+                    onClick={() => handleNavItemClick(nav.path)}
+                  >
+                    {nav.title}
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
-        {type !== "NoSearch" && (
+        {type !== "NoSearch" && type !== "Admin" && (
           <div className={cx("header-middle")}>
             {showSearchInput ? (
               <div className={cx("header-search-focus")}>

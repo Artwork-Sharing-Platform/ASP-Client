@@ -34,6 +34,7 @@ function Message({ onLogout }) {
       setArrivalMessages({
         senderId: data.senderId,
         message: data.message,
+        type: data.type,
         createdAt: Date.now(),
       });
     });

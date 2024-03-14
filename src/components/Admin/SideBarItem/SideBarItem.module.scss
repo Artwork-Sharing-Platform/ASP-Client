@@ -1,0 +1,41 @@
+.sidebar-item-wrapper {
+  margin: 25px 0;
+
+  .sidebar-item-container {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    text-decoration: none;
+
+    .sidebar-item-content {
+      display: flex;
+      align-items: center;
+
+      .item-icon {
+        color: var(--text-color-black);
+        .icon {
+          width: 30px;
+          font-size: 18px;
+        }
+      }
+      .item-title {
+        user-select: none;
+        font-size: 15px;
+        font-weight: 400;
+        color: var(--text-color-black);
+      }
+    }
+  }
+
+  .sidebar-item-container-active {
+    border-radius: 8px;
+    background-color: rgb(255, 229, 229);
+
+    .sidebar-item-content {
+      .item-title {
+        font-weight: 600;
+      }
+    }
+  }
+}

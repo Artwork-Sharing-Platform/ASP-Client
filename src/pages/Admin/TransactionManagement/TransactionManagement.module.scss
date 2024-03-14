@@ -1,0 +1,11 @@
+.transaction-management-wrapper {
+  width: 100%;
+  height: 100%;
+  .transaction-management-container {
+    width: 100%;
+    height: calc(100vh - 80px);
+    margin-top: 80px;
+    display: flex;
+    align-items: center;
+  }
+}

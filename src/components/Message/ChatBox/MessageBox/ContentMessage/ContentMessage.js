@@ -37,13 +37,23 @@ function ContentMessage({ message, own }) {
             </div>
           )}
           <div className={cx("message-info-self")}>
-            <div
-              className={cx("message-content-self")}
-              onMouseEnter={() => setShowDateTimeSelf(true)}
-              onMouseLeave={() => setShowDateTimeSelf(false)}
-            >
-              {message.message}
-            </div>
+            {message.type === "text" ? (
+              <div
+                className={cx("message-content-self")}
+                onMouseEnter={() => setShowDateTimeSelf(true)}
+                onMouseLeave={() => setShowDateTimeSelf(false)}
+              >
+                {message.message}
+              </div>
+            ) : (
+              <div className={cx("message-image-self")}>
+                <img
+                  src={message.message}
+                  alt="message-img"
+                  className={cx("message-img")}
+                />
+              </div>
+            )}
           </div>
         </div>
       ) : (
@@ -54,13 +64,23 @@ function ContentMessage({ message, own }) {
             </div>
           )}
           <div className={cx("message-info-receive")}>
-            <div
-              className={cx("message-content-receive")}
-              onMouseEnter={() => setShowDateTimeReceive(true)}
-              onMouseLeave={() => setShowDateTimeReceive(false)}
-            >
-              {message.message}
-            </div>
+            {message.type === "text" ? (
+              <div
+                className={cx("message-content-receive")}
+                onMouseEnter={() => setShowDateTimeReceive(true)}
+                onMouseLeave={() => setShowDateTimeReceive(false)}
+              >
+                {message.message}
+              </div>
+            ) : (
+              <div className={cx("message-image-receive")}>
+                <img
+                  src={message.message}
+                  alt="message-img"
+                  className={cx("message-img")}
+                />
+              </div>
+            )}
           </div>
         </div>
       )}

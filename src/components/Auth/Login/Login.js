@@ -55,6 +55,7 @@ function Login({ setShowLogin, setShowSignup, onLogin }) {
         .then(async (res) => {
           // Make the callback function async
           const userData = res.data;
+          console.log(userData);
           try {
             const response = await api.post("/auth/google", userData);
             const accessToken = response.data.accessToken;
