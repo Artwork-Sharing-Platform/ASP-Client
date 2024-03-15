@@ -2,7 +2,7 @@ import api from "~/services/apiService";
 
 async function fetchArtworkList() {
   try {
-    const response = await api.get("/art/getAllArtworkByCreatedAt");
+    const response = await api.get("/art/getAllArtworkByCreatedAtArt");
     return response.data;
   } catch (error) {
     console.error("Error fetching artwork list:", error);

@@ -34,7 +34,7 @@ function ReportPin({ userData, pinInformation, setShowReportPin }) {
         // Show Toastify notification
         toast.success("Report Successfully", {
           position: "top-right",
-          autoClose: 1500,
+          autoClose: 500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,

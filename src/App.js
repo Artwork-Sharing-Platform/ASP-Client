@@ -8,10 +8,9 @@ import {
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { AuthProvider } from "./contexts/AuthContext";
-import { PackageProvider } from "./contexts/PackageContext";
-import { MessageProvider } from "./contexts/MessageContext";
 import { publicRoutes } from "~/routes";
+import { MessageProvider } from "./contexts/MessageContext";
+import { PackageProvider } from "./contexts/PackageContext";
 
 import Explore from "./pages/Explore";
 import Home from "./pages/Home";
@@ -37,66 +36,63 @@ function App() {
   };
 
   return (
-    <AuthProvider>
-      <MessageProvider>
-        <PackageProvider>
-          <Router>
-            <div className="App">
-              <ToastContainer />
-              <Routes>
-                {publicRoutes.map((route, index) => {
-                  let Page = route.component;
-
-                  if (route.path === "/") {
-                    return (
-                      <Route
-                        key={index}
-                        path={route.path}
-                        element={
-                          isLoggedIn ? (
-                            <Home onLogout={handleLogout} />
-                          ) : (
-                            <LandingPage onLogin={handleLogin} />
-                          )
-                        }
-                      />
-                    );
-                  } else if (route.path === "/ideas") {
-                    return (
-                      <Route
-                        key={index}
-                        path={route.path}
-                        element={
-                          isLoggedIn ? (
-                            <Home onLogout={handleLogout} />
-                          ) : (
-                            <Explore onLogin={handleLogin} />
-                          )
-                        }
-                      />
-                    );
-                  }
-
+    <MessageProvider>
+      <PackageProvider>
+        <Router>
+          <div className="App">
+            <ToastContainer />
+            <Routes>
+              {publicRoutes.map((route, index) => {
+                let Page = route.component;
+                if (route.path === "/") {
                   return (
                     <Route
                       key={index}
                       path={route.path}
                       element={
                         isLoggedIn ? (
-                          <Page onLogout={handleLogout} />
+                          <Home onLogout={handleLogout} />
                         ) : (
-                          <Navigate to="/" />
+                          <LandingPage onLogin={handleLogin} />
                         )
                       }
                     />
                   );
-                })}
-              </Routes>
-            </div>
-          </Router>
-        </PackageProvider>
-      </MessageProvider>
-    </AuthProvider>
+                } else if (route.path === "/ideas") {
+                  return (
+                    <Route
+                      key={index}
+                      path={route.path}
+                      element={
+                        isLoggedIn ? (
+                          <Home onLogout={handleLogout} />
+                        ) : (
+                          <Explore onLogin={handleLogin} />
+                        )
+                      }
+                    />
+                  );
+                }
+
+                return (
+                  <Route
+                    key={index}
+                    path={route.path}
+                    element={
+                      isLoggedIn ? (
+                        <Page onLogout={handleLogout} />
+                      ) : (
+                        <Navigate to="/" />
+                      )
+                    }
+                  />
+                );
+              })}
+            </Routes>
+          </div>
+        </Router>
+      </PackageProvider>
+    </MessageProvider>
   );
 }
 

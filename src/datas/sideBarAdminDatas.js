@@ -13,18 +13,24 @@ const SideBarData = [
   },
   {
     id: 3,
+    title: "Artwork Management",
+    path: "/admin/artwork",
+    icon: "fa-solid fa-image",
+  },
+  {
+    id: 4,
     title: "Report Management",
     path: "/admin/report",
     icon: "fa-solid fa-file-chart-pie",
   },
   {
-    id: 4,
+    id: 5,
     title: "Transaction Management",
     path: "/admin/transaction",
     icon: "fa-solid fa-arrows-repeat",
   },
   {
-    id: 5,
+    id: 7,
     title: "Settings",
     path: "/admin/settings",
     icon: "fa-solid fa-gear",

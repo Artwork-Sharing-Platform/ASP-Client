@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import classNames from "classnames/bind";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
@@ -22,6 +22,7 @@ import { MessageContext } from "~/contexts/MessageContext";
 
 const cx = classNames.bind(styles);
 function Login({ setShowLogin, setShowSignup, onLogin }) {
+  const navigate = useNavigate();
   const { setUserId } = useContext(AuthContext);
   const { setFeature } = useContext(PackageContext);
   const { setConversations } = useContext(MessageContext);
@@ -30,6 +31,7 @@ function Login({ setShowLogin, setShowSignup, onLogin }) {
     email: null,
     password: null,
   });
+  const [errorMsg, setErrorMsg] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const loginGoogle = useGoogleLogin({
@@ -55,11 +57,11 @@ function Login({ setShowLogin, setShowSignup, onLogin }) {
         .then(async (res) => {
           // Make the callback function async
           const userData = res.data;
-          console.log(userData);
           try {
             const response = await api.post("/auth/google", userData);
-            const accessToken = response.data.accessToken;
-            const refreshToken = response.data.refreshToken;
+            const user = response.data.user;
+            const accessToken = response.data.tokens.accessToken;
+            const refreshToken = response.data.tokens.refreshToken;
             TokenService.setAccessToken(accessToken);
             TokenService.setRefreshToken(refreshToken);
             const decodeAccessToken = jwtDecode(accessToken);
@@ -74,14 +76,19 @@ function Login({ setShowLogin, setShowSignup, onLogin }) {
             const conversations = await fetchGetConversation(userId);
             setConversations(conversations);
             setLoading(false);
+            if (user.type === "Admin") {
+              navigate("/admin");
+            }
             onLogin();
           } catch (error) {
-            console.log(error);
+            const errorMessage = error.response.data.message;
+            setLoading(false);
+            setErrorMsg(errorMessage);
           }
         })
         .catch((err) => console.log(err));
     }
-  }, [googleInfo, onLogin, setConversations, setFeature, setUserId]);
+  }, [googleInfo, navigate, onLogin, setConversations, setFeature, setUserId]);
 
   const handleChangeEmail = (e) => {
     setLoginData({ ...loginData, email: e.target.value });
@@ -97,8 +104,9 @@ function Login({ setShowLogin, setShowSignup, onLogin }) {
       .post("/auth/login", loginData)
       .then(async (response) => {
         try {
-          const accessToken = response.data.accessToken;
-          const refreshToken = response.data.refreshToken;
+          const user = response.data.user;
+          const accessToken = response.data.tokens.accessToken;
+          const refreshToken = response.data.tokens.refreshToken;
           TokenService.setAccessToken(accessToken);
           TokenService.setRefreshToken(refreshToken);
           const decodeAccessToken = jwtDecode(accessToken);
@@ -113,14 +121,18 @@ function Login({ setShowLogin, setShowSignup, onLogin }) {
           const conversations = await fetchGetConversation(userId);
           setConversations(conversations);
           setLoading(false);
+          if (user.type === "Admin") {
+            navigate("/admin");
+          }
           onLogin();
         } catch (error) {
           console.log(error);
         }
       })
       .catch((error) => {
+        const errorMessage = error.response.data.message;
         setLoading(false);
-        console.log(error.response.data.error);
+        setErrorMsg(errorMessage);
       });
   };
 
@@ -183,12 +195,17 @@ function Login({ setShowLogin, setShowSignup, onLogin }) {
                     />
                   </div>
                 </div>
+                {/* Error Message */}
+                {errorMsg && (
+                  <div className={cx("error-message")}>{errorMsg}</div>
+                )}
                 {/* Forget password */}
                 <div className={cx("forgot-password")}>
                   <Link to="/reset" className={cx("reset")}>
                     Forgot your password?
                   </Link>
                 </div>
+
                 {/* Login button */}
                 <div className={cx("login-btn")}>
                   <button className={cx("btn")} onClick={handleLogin}>

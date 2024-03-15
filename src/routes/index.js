@@ -12,6 +12,7 @@ import Admin from "~/pages/Admin";
 import UserManagement from "~/pages/Admin/UserManagement";
 import ReportManagement from "~/pages/Admin/ReportManagement";
 import TransactionManagement from "~/pages/Admin/TransactionManagement";
+import ArtworkManagement from "~/pages/Admin/ArtworkManagement";
 import AdminSettings from "~/pages/Admin/AdminSettings";
 import PackageFeature from "~/components/Popup/AccessPrivatePopup";
 const publicRoutes = [
@@ -28,6 +29,7 @@ const publicRoutes = [
   { path: "/admin", component: Admin },
   { path: "/admin/user", component: UserManagement },
   { path: "/admin/report", component: ReportManagement },
+  { path: "/admin/artwork", component: ArtworkManagement },
   { path: "/admin/transaction", component: TransactionManagement },
   { path: "/admin/settings", component: AdminSettings },
   { path: "/page", component: PackageFeature },
