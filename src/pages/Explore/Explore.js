@@ -1,19 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
+import { fetchArtworkList } from "~/services/artService";
+import { categories } from "~/datas/categoriesDatas";
 import ExploreHeder from "~/layouts/ExploreHeder";
 import Login from "~/components/Auth/Login";
 import Signup from "~/components/Auth/Signup";
 import SignupBusiness from "~/components/Auth/SignupBusiness";
-import { categories } from "~/datas/categoriesDatas";
-import { images } from "~/datas/imageDatas";
 import styles from "./Explore.module.scss";
 const cx = classNames.bind(styles);
 function Explore({ onLogin }) {
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [showSignupBusiness, setShowSignupBusiness] = useState(false);
-  // const handleClickArtwork = () => {};
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const artWorkList = await fetchArtworkList();
+        setImages(artWorkList);
+      } catch (error) {
+        console.error("Error fetching pin information:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleClickArtwork = () => {
+    const isLogin = localStorage.getItem("isLoggedIn");
+    if (isLogin === "false") {
+      setShowLogin(true);
+    }
+  };
   return (
     <>
       {showLogin && (
@@ -69,11 +89,13 @@ function Explore({ onLogin }) {
             <div className={cx("heading-text")}>Explore popular ideas</div>
             <div className={cx("show-artwork")}>
               {images.map((item, index) => (
-                <div className={cx("image-card")} key={index}>
-                  <img src={item} alt="img" className={cx("image-item")} />
-                  <Link to="" className={cx("image-label")}>
-                    Open
-                  </Link>
+                <div
+                  className={cx("image-card")}
+                  key={index}
+                  onClick={handleClickArtwork}
+                >
+                  <img src={item.url} alt="img" className={cx("image-item")} />
+                  <div className={cx("image-label")}>Open</div>
                 </div>
               ))}
             </div>

@@ -159,6 +159,7 @@ function Create({ onLogout }) {
   };
 
   const handlePublishPin = async () => {
+    console.log(process.env.REACT_APP_MODERATION_URL);
     setLoadingPublish(true);
     if (!userData.packageId) {
       setLoadingPublish(false);
@@ -182,7 +183,7 @@ function Create({ onLogout }) {
         formData.append("key", "ae8e0d930c8fc3f3bf9773d0ea19affd");
 
         const response = await axios.post(
-          "https://api.moderatecontent.com/moderate/",
+          process.env.REACT_APP_MODERATION_URL,
           formData,
           {
             headers: {

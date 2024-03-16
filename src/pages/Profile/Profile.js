@@ -14,12 +14,15 @@ import LoadingSpinner from "~/components/LoadingSpinner";
 
 import UserDefaultImg from "~/assets/images/user-default.png";
 import styles from "./Profile.module.scss";
+import EditPin from "~/components/Profile/Created/EditPin";
 const cx = classNames.bind(styles);
 function Profile({ onLogout }) {
   const { userData } = useContext(AuthContext);
+  const [artworkEditData, setArtworkEditData] = useState(null);
+  const [countFollowing, setCountFollowing] = useState(0);
   const [showContent, setShowContent] = useState("Saved");
   const [showEditProfile, setShowEditProfile] = useState(false);
-  const [countFollowing, setCountFollowing] = useState(0);
+  const [showEditArtwork, setShowEditArtwork] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingContent, setLoadingContent] = useState(true);
 
@@ -44,6 +47,12 @@ function Profile({ onLogout }) {
         <EditProfile
           setShowEditProfile={setShowEditProfile}
           setLoading={setLoading}
+        />
+      )}
+      {showEditArtwork && (
+        <EditPin
+          artworkEditData={artworkEditData}
+          setShowEditArtwork={setShowEditArtwork}
         />
       )}
       <div className={cx("profile-wrapper")}>
@@ -153,7 +162,11 @@ function Profile({ onLogout }) {
             {showContent === "Saved" ? (
               <Saved userData={userData} />
             ) : (
-              <Created userData={userData} />
+              <Created
+                userData={userData}
+                setShowEditArtwork={setShowEditArtwork}
+                setArtworkEditData={setArtworkEditData}
+              />
             )}
           </div>
         )}

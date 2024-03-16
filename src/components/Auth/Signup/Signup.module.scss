@@ -15,6 +15,7 @@
     height: fit-content;
     border-radius: 30px;
     background-color: #fff;
+    animation: slideFromTop 0.5s ease forwards;
 
     .normal {
       width: 100%;
@@ -194,6 +195,13 @@
               }
             }
 
+            .error-msg {
+              padding-top: 10px;
+              font-size: 13px;
+              line-height: 20px;
+              color: red;
+            }
+
             .signup-btn {
               width: 100%;
               margin-top: 20px;
@@ -351,5 +359,13 @@
         color: var(--text-color-black);
       }
     }
+  }
+}
+@keyframes slideFromTop {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
   }
 }

@@ -14,6 +14,7 @@ import Conversation from "~/components/Message/Conversation";
 
 import MainHeader from "~/layouts/MainHeader";
 import styles from "./Message.module.scss";
+import ImageViewer from "~/components/ImageViewer";
 
 const cx = classNames.bind(styles);
 
@@ -27,6 +28,8 @@ function Message({ onLogout }) {
   const [messages, setMessages] = useState([]);
   const [arrivalMessages, setArrivalMessages] = useState(null);
   const [currentChat, setCurrentChat] = useState(null);
+  const [imageViewer, setImageViewer] = useState(null);
+  const [showImageViewer, setShowImageViewer] = useState(false);
 
   useEffect(() => {
     socket.current = io("http://localhost:5000");
@@ -88,33 +91,43 @@ function Message({ onLogout }) {
   }, [currentChat]);
 
   return (
-    <div className={cx("message-wrapper")}>
-      <MainHeader onLogout={onLogout} type="NoSearch" />
-      <div className={cx("message-container")}>
-        <Conversation
-          conversations={conversations}
-          currentUser={userData}
-          currentChat={currentChat}
-          setCurrentChat={setCurrentChat}
+    <>
+      {showImageViewer && (
+        <ImageViewer
+          imageSrc={imageViewer}
+          setShowImageViewer={setShowImageViewer}
         />
-        {currentChat ? (
-          <ChatBox
-            socket={socket}
+      )}
+      <div className={cx("message-wrapper")}>
+        <MainHeader onLogout={onLogout} type="NoSearch" />
+        <div className={cx("message-container")}>
+          <Conversation
+            conversations={conversations}
             currentUser={userData}
             currentChat={currentChat}
-            messages={messages}
-            setMessages={setMessages}
+            setCurrentChat={setCurrentChat}
           />
-        ) : (
-          <div className={cx("no-message-box")}></div>
-        )}
-        {currentChat ? (
-          <ChatInfo currentChat={currentChat} currentUser={userData} />
-        ) : (
-          <div className={cx("no-info-chat")}></div>
-        )}
+          {currentChat ? (
+            <ChatBox
+              socket={socket}
+              currentUser={userData}
+              currentChat={currentChat}
+              messages={messages}
+              setMessages={setMessages}
+              setShowImageViewer={setShowImageViewer}
+              setImageViewer={setImageViewer}
+            />
+          ) : (
+            <div className={cx("no-message-box")}></div>
+          )}
+          {currentChat ? (
+            <ChatInfo currentChat={currentChat} currentUser={userData} />
+          ) : (
+            <div className={cx("no-info-chat")}></div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

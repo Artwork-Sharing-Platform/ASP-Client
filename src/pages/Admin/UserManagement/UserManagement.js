@@ -1,19 +1,27 @@
 import { Button, Table, Tag } from "antd";
 import classNames from "classnames/bind";
 import { useContext, useEffect, useState } from "react";
+import { ClipLoader } from "react-spinners";
 
 import api from "~/services/apiService";
 import { AuthContext } from "~/contexts/AuthContext";
 
 import SideBar from "~/components/Admin/SideBar";
 import MainHeader from "~/layouts/MainHeader";
+import NotFound from "~/components/NotFound";
 
 import styles from "./UserManagement.module.scss";
-import { ClipLoader } from "react-spinners";
 const cx = classNames.bind(styles);
 
 function UserManagement({ onLogout }) {
   const { userData } = useContext(AuthContext);
+  const [authorize, setAuthorize] = useState(false);
+
+  useEffect(() => {
+    if (userData.type !== "Admin") {
+      setAuthorize(true);
+    }
+  }, [userData.type]);
   const columns = [
     {
       title: <div className={cx("column-title")}>Avatar</div>,
@@ -185,36 +193,42 @@ function UserManagement({ onLogout }) {
     }
   };
   return (
-    <div className={cx("user-management-wrapper")}>
-      <MainHeader onLogout={onLogout} type="Admin" />
-      <div className={cx("user-management-container")}>
-        <SideBar />
-        <div className={cx("user-management-main")}>
-          <div className={cx("user-management-content")}>
-            <div className={cx("user-management-heading")}>
-              <div className={cx("head-text")}>User Management</div>
+    <>
+      {authorize ? (
+        <NotFound />
+      ) : (
+        <div className={cx("user-management-wrapper")}>
+          <MainHeader onLogout={onLogout} type="Admin" />
+          <div className={cx("user-management-container")}>
+            <SideBar />
+            <div className={cx("user-management-main")}>
+              <div className={cx("user-management-content")}>
+                <div className={cx("user-management-heading")}>
+                  <div className={cx("head-text")}>User Management</div>
+                </div>
+                {loading ? (
+                  <div className={cx("user-management-loading")}>
+                    <ClipLoader
+                      size={40}
+                      color="#e60023"
+                      className={cx("loading-spinner")}
+                    />
+                  </div>
+                ) : (
+                  <div className={cx("user-management-table")}>
+                    <Table
+                      columns={columns}
+                      dataSource={data}
+                      pagination={{ pageSize: 8, total: data.length }}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
-            {loading ? (
-              <div className={cx("user-management-loading")}>
-                <ClipLoader
-                  size={40}
-                  color="#e60023"
-                  className={cx("loading-spinner")}
-                />
-              </div>
-            ) : (
-              <div className={cx("user-management-table")}>
-                <Table
-                  columns={columns}
-                  dataSource={data}
-                  pagination={{ pageSize: 8, total: data.length }}
-                />
-              </div>
-            )}
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 

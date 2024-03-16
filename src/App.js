@@ -15,6 +15,7 @@ import { PackageProvider } from "./contexts/PackageContext";
 import Explore from "./pages/Explore";
 import Home from "./pages/Home";
 import LandingPage from "./pages/LandingPage";
+import NotFound from "./components/NotFound";
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(() => {
@@ -42,6 +43,7 @@ function App() {
           <div className="App">
             <ToastContainer />
             <Routes>
+              <Route path="*" element={<NotFound />} />
               {publicRoutes.map((route, index) => {
                 let Page = route.component;
                 if (route.path === "/") {

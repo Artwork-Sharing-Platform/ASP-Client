@@ -3,7 +3,12 @@ import classNames from "classnames/bind";
 import styles from "./MessageBox.module.scss";
 import ContentMessage from "./ContentMessage";
 const cx = classNames.bind(styles);
-function MessageBox({ messages, currentUser }) {
+function MessageBox({
+  messages,
+  currentUser,
+  setShowImageViewer,
+  setImageViewer,
+}) {
   return (
     <div className={cx("message-box-container")}>
       {messages
@@ -14,6 +19,8 @@ function MessageBox({ messages, currentUser }) {
             key={index}
             message={message}
             own={message.senderId === currentUser._id}
+            setShowImageViewer={setShowImageViewer}
+            setImageViewer={setImageViewer}
           />
         ))}
     </div>

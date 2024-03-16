@@ -10,7 +10,15 @@ import UserDefaultImage from "~/assets/images/user-default.png";
 import styles from "./ChatBox.module.scss";
 
 const cx = classNames.bind(styles);
-function ChatBox({ socket, currentUser, currentChat, messages, setMessages }) {
+function ChatBox({
+  socket,
+  currentUser,
+  currentChat,
+  messages,
+  setMessages,
+  setShowImageViewer,
+  setImageViewer,
+}) {
   const [user, setUser] = useState();
   useEffect(() => {
     if (currentUser._id) {
@@ -57,7 +65,12 @@ function ChatBox({ socket, currentUser, currentChat, messages, setMessages }) {
             </button>
           </div>
         </div>
-        <MessageBox messages={messages} currentUser={currentUser} />
+        <MessageBox
+          messages={messages}
+          currentUser={currentUser}
+          setShowImageViewer={setShowImageViewer}
+          setImageViewer={setImageViewer}
+        />
         <MessageInput
           socket={socket}
           currentUser={currentUser}

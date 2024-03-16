@@ -150,12 +150,14 @@ function Middle({
 
   return (
     <div className={cx("information-content")}>
+      {pinInformation.access === "private" && (
+        <i className={cx("fa-sharp fa-solid fa-crown", "icon-private")}></i>
+      )}
       {pinInformation.link && (
         <Link to={pinInformation.link} className={cx("hyper-link")}>
           {pinInformation.link}
         </Link>
       )}
-
       {pinInformation.title && (
         <div className={cx("title")}>
           <div className={cx("text")}>{pinInformation.title}</div>

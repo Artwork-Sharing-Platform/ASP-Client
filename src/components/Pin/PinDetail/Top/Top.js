@@ -21,7 +21,7 @@ function Top({
   setPackageType,
   setPackageDescType,
 }) {
-  const { feature } = useContext(PackageContext);
+  const { feature, setFeature } = useContext(PackageContext);
   const [saved, setSaved] = useState(false);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
   const [showShare, setShowShare] = useState(false);
@@ -59,7 +59,11 @@ function Top({
         artID: pinInformation._id,
       };
       try {
-        await api.post(`/save/saveArtwork`, saveArtworkData);
+        const saveResponse = await api.post(
+          `/save/saveArtwork`,
+          saveArtworkData
+        );
+        setFeature(saveResponse.data.feature);
         const saveList = await fetchGetAllArtIDsForUser(userData._id);
         const filteredSaveData = saveList.filter(
           (user) => user === pinInformation._id
@@ -129,7 +133,7 @@ function Top({
             setShowPrivate={setShowPrivate}
           />
         )}
-        {showShare && <SharingPin />}
+        {showShare && <SharingPin pinInformation={pinInformation} />}
         <div className={cx("action-right")}>
           {saved ? (
             <button className={cx("saved-btn")} onClick={handleSavePin}>

@@ -1,17 +1,28 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Table } from "antd";
 import classNames from "classnames/bind";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { AuthContext } from "~/contexts/AuthContext";
 import api from "~/services/apiService";
+
 import SideBar from "~/components/Admin/SideBar";
 import MainHeader from "~/layouts/MainHeader";
+import NotFound from "~/components/NotFound";
 
 import styles from "./ReportManagement.module.scss";
 const cx = classNames.bind(styles);
 function ReportManagement({ onLogout }) {
+  const { userData } = useContext(AuthContext);
+  const [authorize, setAuthorize] = useState(false);
+
+  useEffect(() => {
+    if (userData.type !== "Admin") {
+      setAuthorize(true);
+    }
+  }, [userData.type]);
   const columns = [
     {
       title: <div className={cx("column-title")}>Art Picture</div>,
@@ -172,36 +183,42 @@ function ReportManagement({ onLogout }) {
     }
   };
   return (
-    <div className={cx("report-management-wrapper")}>
-      <MainHeader onLogout={onLogout} type="Admin" />
-      <div className={cx("report-management-container")}>
-        <SideBar />
-        <div className={cx("report-management-main")}>
-          <div className={cx("report-management-content")}>
-            <div className={cx("report-management-heading")}>
-              <div className={cx("head-text")}>Report Management</div>
+    <>
+      {authorize ? (
+        <NotFound />
+      ) : (
+        <div className={cx("report-management-wrapper")}>
+          <MainHeader onLogout={onLogout} type="Admin" />
+          <div className={cx("report-management-container")}>
+            <SideBar />
+            <div className={cx("report-management-main")}>
+              <div className={cx("report-management-content")}>
+                <div className={cx("report-management-heading")}>
+                  <div className={cx("head-text")}>Report Management</div>
+                </div>
+                {loading ? (
+                  <div className={cx("report-management-loading")}>
+                    <ClipLoader
+                      size={40}
+                      color="#e60023"
+                      className={cx("loading-spinner")}
+                    />
+                  </div>
+                ) : (
+                  <div className={cx("report-management-table")}>
+                    <Table
+                      columns={columns}
+                      dataSource={data}
+                      pagination={{ pageSize: 5, total: data.length }}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
-            {loading ? (
-              <div className={cx("report-management-loading")}>
-                <ClipLoader
-                  size={40}
-                  color="#e60023"
-                  className={cx("loading-spinner")}
-                />
-              </div>
-            ) : (
-              <div className={cx("report-management-table")}>
-                <Table
-                  columns={columns}
-                  dataSource={data}
-                  pagination={{ pageSize: 5, total: data.length }}
-                />
-              </div>
-            )}
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 

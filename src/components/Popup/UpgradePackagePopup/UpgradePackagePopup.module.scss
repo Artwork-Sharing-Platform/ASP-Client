@@ -16,6 +16,7 @@
     border-radius: 20px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     background-color: #fff;
+    animation: slideFromTop 0.5s ease forwards;
 
     .upgrade-package-content {
       width: 100%;
@@ -182,5 +183,13 @@
         }
       }
     }
+  }
+}
+@keyframes slideFromTop {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
   }
 }

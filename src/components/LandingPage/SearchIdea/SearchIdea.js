@@ -1,7 +1,9 @@
 import classNames from "classnames/bind";
+import { useNavigate } from "react-router-dom";
 import styles from "./SearchIdea.module.scss";
 const cx = classNames.bind(styles);
 function SearchIdea() {
+  const navigate = useNavigate();
   return (
     <div className={cx("search-ideas-container")}>
       <div className={cx("images-layout")}>
@@ -50,7 +52,12 @@ function SearchIdea() {
             </div>
           </div>
           <div className={cx("explore")}>
-            <button className={cx("explore-btn")}>Explore</button>
+            <button
+              className={cx("explore-btn")}
+              onClick={() => navigate("/ideas")}
+            >
+              Explore
+            </button>
           </div>
         </div>
       </div>

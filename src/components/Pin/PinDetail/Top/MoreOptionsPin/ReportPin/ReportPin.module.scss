@@ -16,6 +16,7 @@
     height: 755px;
     border-radius: 15px;
     background-color: #fff;
+    animation: slideFromTop 0.5s ease forwards;
 
     .report-pin-heading {
       width: 100%;
@@ -149,5 +150,14 @@
     .report-pin-container {
       height: 725px;
     }
+  }
+}
+
+@keyframes slideFromTop {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
   }
 }

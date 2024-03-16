@@ -1,15 +1,22 @@
 import classNames from "classnames/bind";
+import { useNavigate } from "react-router-dom";
 import { images } from "~/datas/imageDatas";
 import styles from "./SlideShowIdea.module.scss";
 const cx = classNames.bind(styles);
 
 function SlideShowIdea() {
+  const navigate = useNavigate();
   return (
     <div className={cx("gallery-wrapper")}>
       <div className={cx("content")}>
         <div className={cx("main-text")}>Get your own ideas</div>
         <div className={cx("explore")}>
-          <button className={cx("explore-btn")}>Explore</button>
+          <button
+            className={cx("explore-btn")}
+            onClick={() => navigate("/ideas")}
+          >
+            Explore
+          </button>
         </div>
       </div>
       <div className={cx("images-layout")}>

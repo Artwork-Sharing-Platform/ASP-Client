@@ -12,6 +12,7 @@ function Signup({ setShowSignup, setShowLogin, setShowSignupBusiness }) {
     password: null,
     dob: null,
   });
+  const [errMsg, setErrorMsg] = useState("");
 
   const handleChangeEmail = (e) => {
     setUserData({ ...userData, email: e.target.value });
@@ -32,10 +33,9 @@ function Signup({ setShowSignup, setShowLogin, setShowSignupBusiness }) {
       .post("/auth/signup", userData)
       .then((response) => {
         setShowLogin(true);
-        // console.log(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        setErrorMsg(error.response.data.message);
       });
   };
 
@@ -114,6 +114,8 @@ function Signup({ setShowSignup, setShowLogin, setShowSignupBusiness }) {
                     />
                   </div>
                 </div>
+                {/* Error message */}
+                {errMsg && <div className={cx("error-msg")}>{errMsg}</div>}
                 {/* Signup button */}
                 <div className={cx("signup-btn")}>
                   <button className={cx("btn")} onClick={handleSignUp}>

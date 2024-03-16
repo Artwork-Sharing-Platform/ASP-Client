@@ -1,10 +1,17 @@
+import { useState } from "react";
 import classNames from "classnames/bind";
 import WhatsApp from "~/assets/images/Whatsapp.png";
 import Twitter from "~/assets/images/X.png";
 import Facebook from "~/assets/images/facebook.png";
 import styles from "./SharingPin.module.scss";
 const cx = classNames.bind(styles);
-function SharingPin() {
+function SharingPin({ pinInformation }) {
+  const urlCopy = `${process.env.REACT_APP_CLIENT}/pin/${pinInformation._id}`;
+  const [copyText, setCopyText] = useState("Copy link");
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(urlCopy);
+    setCopyText("Copied!");
+  };
   return (
     <div className={cx("sharing-wrapper")} onClick={(e) => e.stopPropagation()}>
       <div className={cx("sharing-container")}>
@@ -63,10 +70,10 @@ function SharingPin() {
             <div className={cx("twitter-text")}>X</div>
           </div>
           <div className={cx("copy-link")}>
-            <div className={cx("copy-link-icon")}>
+            <div className={cx("copy-link-icon")} onClick={handleCopyLink}>
               <i className={cx("fa-solid fa-link", "icon")}></i>
             </div>
-            <div className={cx("copy-link-text")}>Copy link</div>
+            <div className={cx("copy-link-text")}>{copyText}</div>
           </div>
           <div className={cx("email")}>
             <div className={cx("email-icon")}>

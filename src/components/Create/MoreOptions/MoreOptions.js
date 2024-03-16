@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 
 import styles from "./MoreOptions.module.scss";
 const cx = classNames.bind(styles);
-function MoreOptions({ artWorkData, setArtWorkData }) {
+function MoreOptions({ type = "Normal", artWorkData, setArtWorkData }) {
   const handleChangeAds = (checked) => {
     setArtWorkData({ ...artWorkData, isCheckedAds: checked });
   };
@@ -15,16 +15,18 @@ function MoreOptions({ artWorkData, setArtWorkData }) {
   };
   return (
     <div className={cx("more-options-content")}>
-      <div className={cx("option-ads")}>
-        <Switch
-          checked={artWorkData.isCheckedAds}
-          onChange={handleChangeAds}
-          style={{
-            background: artWorkData.isCheckedAds ? "#e60023" : "#efefef",
-          }}
-        />
-        <div className={cx("text")}>Allow ads</div>
-      </div>
+      {type === "Normal" && (
+        <div className={cx("option-ads")}>
+          <Switch
+            checked={artWorkData.isCheckedAds}
+            onChange={handleChangeAds}
+            style={{
+              background: artWorkData.isCheckedAds ? "#e60023" : "#efefef",
+            }}
+          />
+          <div className={cx("text")}>Allow ads</div>
+        </div>
+      )}
       <div className={cx("option-comment")}>
         <Switch
           checked={artWorkData.isCheckedComment}

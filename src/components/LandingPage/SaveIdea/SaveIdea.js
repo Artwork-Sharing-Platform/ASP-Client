@@ -1,8 +1,9 @@
 import classNames from "classnames/bind";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./SaveIdea.module.scss";
-import { Link } from "react-router-dom";
 const cx = classNames.bind(styles);
 function SaveIdea() {
+  const navigate = useNavigate();
   return (
     <div className={cx("save-ideas-container")}>
       <div className={cx("content")}>
@@ -14,7 +15,12 @@ function SaveIdea() {
             </div>
           </div>
           <div className={cx("explore")}>
-            <button className={cx("explore-btn")}>Explore</button>
+            <button
+              className={cx("explore-btn")}
+              onClick={() => navigate("/ideas")}
+            >
+              Explore
+            </button>
           </div>
         </div>
       </div>

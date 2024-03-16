@@ -1,11 +1,11 @@
 import classNames from "classnames/bind";
-import { useCallback, useContext, useRef, useState } from "react";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { useContext, useRef, useState } from "react";
+import { v4 } from "uuid";
+import { storage } from "~/configs/firebase";
 import { MessageContext } from "~/contexts/MessageContext";
 import api from "~/services/apiService";
 import styles from "./MessageInput.module.scss";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { storage } from "~/configs/firebase";
-import { v4 } from "uuid";
 const cx = classNames.bind(styles);
 
 function MessageInput({ socket, currentUser, currentChat, setMessages }) {
@@ -57,14 +57,24 @@ function MessageInput({ socket, currentUser, currentChat, setMessages }) {
     setShowMediaMessage(false);
   };
 
-  const handleSendMessage = useCallback(async () => {
+  const handleSendMessage = async () => {
     const { _id: conversationId, members } = currentChat;
     const { _id: senderId } = currentUser;
+
+    const isURL = (str) => {
+      const urlRegex = /(https?:\/\/[^\s]+)/;
+      return urlRegex.test(str);
+    };
+
+    const messageType = typeMessage === "text" ? "text" : "image";
+    const messageContent = typeMessage === "text" ? newMessage : messageMedia;
+    const messageTypeWithLink = isURL(messageContent) ? "link" : messageType;
+
     const messagePreview = {
       conversationId,
       senderId,
-      type: typeMessage,
-      message: typeMessage === "text" ? newMessage : messageMedia,
+      type: messageTypeWithLink,
+      message: messageContent,
       seen: false,
       createdAt: new Date(),
     };
@@ -80,7 +90,7 @@ function MessageInput({ socket, currentUser, currentChat, setMessages }) {
     await socket.current.emit("sendMessage", {
       senderId,
       receiverId,
-      type: typeMessage === "text" ? "text" : "image",
+      type: messageTypeWithLink,
       message: messagePreview.message,
     });
 
@@ -98,7 +108,7 @@ function MessageInput({ socket, currentUser, currentChat, setMessages }) {
       const message = {
         conversationId,
         senderId,
-        type: typeMessage,
+        type: messageTypeWithLink,
         message: typeMessage === "text" ? newMessage : downloadURL,
         seen: false,
         createdAt: new Date(),
@@ -111,17 +121,7 @@ function MessageInput({ socket, currentUser, currentChat, setMessages }) {
     } catch (error) {
       console.error(error.message);
     }
-  }, [
-    currentChat,
-    currentUser,
-    typeMessage,
-    newMessage,
-    messageMedia,
-    setMessages,
-    fileImageUpload,
-    socket,
-    setConversations,
-  ]);
+  };
 
   const handleEnterSendMessage = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {

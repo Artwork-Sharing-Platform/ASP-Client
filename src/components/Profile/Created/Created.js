@@ -9,7 +9,7 @@ import ImageCard from "~/components/Home/ImageCard";
 
 import styles from "./Created.module.scss";
 const cx = classNames.bind(styles);
-function Created({ userData }) {
+function Created({ userData, setShowEditArtwork, setArtworkEditData }) {
   const [createdArtworkList, setCreatedArtworkList] = useState([]);
   const [loadingArtsShow, setLoadingArtsShow] = useState(true);
 
@@ -40,7 +40,13 @@ function Created({ userData }) {
         <div className={cx("created-content-artwork-list-container")}>
           <div className={cx("created-content-artwork-list")}>
             {createdArtworkList.map((art, index) => (
-              <ImageCard artWork={art} key={index} />
+              <ImageCard
+                artWork={art}
+                key={index}
+                type="Edit"
+                setShowEditArtwork={setShowEditArtwork}
+                setArtworkEditData={setArtworkEditData}
+              />
             ))}
           </div>
         </div>

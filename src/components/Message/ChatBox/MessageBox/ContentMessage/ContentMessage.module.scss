@@ -30,6 +30,8 @@
     }
 
     .message-image-receive {
+      user-select: none;
+      cursor: pointer;
       width: 200px;
       height: fit-content;
 
@@ -78,6 +80,8 @@
     }
 
     .message-image-self {
+      user-select: none;
+      cursor: pointer;
       width: 200px;
       height: fit-content;
 

@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from "classnames/bind";
+import { useNavigate } from "react-router-dom";
 import styles from "./ShopIdea.module.scss";
 const cx = classNames.bind(styles);
 const imagesLayoutStyle = {
@@ -7,6 +8,7 @@ const imagesLayoutStyle = {
     'url("https://s.pinimg.com/webapp/shop-de8ddf10.png") center/cover no-repeat',
 };
 function ShopIdea() {
+  const navigate = useNavigate();
   return (
     <div className={cx("shop-ideas-container")}>
       <div className={cx("images-layout")} style={imagesLayoutStyle}>
@@ -37,7 +39,12 @@ function ShopIdea() {
             </div>
           </div>
           <div className={cx("explore")}>
-            <button className={cx("explore-btn")}>Explore</button>
+            <button
+              className={cx("explore-btn")}
+              onClick={() => navigate("/ideas")}
+            >
+              Explore
+            </button>
           </div>
         </div>
       </div>

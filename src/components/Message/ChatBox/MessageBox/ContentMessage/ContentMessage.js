@@ -1,8 +1,9 @@
 import classNames from "classnames/bind";
 import styles from "./ContentMessage.module.scss";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 const cx = classNames.bind(styles);
-function ContentMessage({ message, own }) {
+function ContentMessage({ message, own, setShowImageViewer, setImageViewer }) {
   const [showDateTimeSelf, setShowDateTimeSelf] = useState(false);
   const [showDateTimeReceive, setShowDateTimeReceive] = useState(false);
 
@@ -27,6 +28,15 @@ function ContentMessage({ message, own }) {
     }
   };
 
+  const handleClickImageViewerSelf = (image) => {
+    setImageViewer(image);
+    setShowImageViewer(true);
+  };
+
+  const handleClickImageViewerReceive = (image) => {
+    setImageViewer(image);
+    setShowImageViewer(true);
+  };
   return (
     <>
       {own ? (
@@ -45,8 +55,21 @@ function ContentMessage({ message, own }) {
               >
                 {message.message}
               </div>
+            ) : message.type === "link" ? (
+              <Link
+                to={message.message}
+                target="_blank"
+                className={cx("message-content-self")}
+                onMouseEnter={() => setShowDateTimeSelf(true)}
+                onMouseLeave={() => setShowDateTimeSelf(false)}
+              >
+                {message.message}
+              </Link>
             ) : (
-              <div className={cx("message-image-self")}>
+              <div
+                className={cx("message-image-self")}
+                onClick={() => handleClickImageViewerSelf(message.message)}
+              >
                 <img
                   src={message.message}
                   alt="message-img"
@@ -72,8 +95,21 @@ function ContentMessage({ message, own }) {
               >
                 {message.message}
               </div>
+            ) : message.type === "link" ? (
+              <Link
+                to={message.message}
+                target="_blank"
+                className={cx("message-content-receive")}
+                onMouseEnter={() => setShowDateTimeReceive(true)}
+                onMouseLeave={() => setShowDateTimeReceive(false)}
+              >
+                {message.message}
+              </Link>
             ) : (
-              <div className={cx("message-image-receive")}>
+              <div
+                className={cx("message-image-receive")}
+                onClick={() => handleClickImageViewerReceive(message.message)}
+              >
                 <img
                   src={message.message}
                   alt="message-img"

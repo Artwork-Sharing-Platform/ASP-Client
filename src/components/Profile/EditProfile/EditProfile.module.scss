@@ -18,6 +18,7 @@
     display: flex;
     flex-direction: column;
     background-color: #fff;
+    animation: slideFromTop 0.5s ease forwards;
 
     .edit-profile-heading {
       width: 100%;
@@ -336,5 +337,14 @@
     .edit-profile-container {
       height: 725px;
     }
+  }
+}
+
+@keyframes slideFromTop {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
   }
 }

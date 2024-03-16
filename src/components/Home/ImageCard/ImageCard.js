@@ -2,13 +2,23 @@ import classNames from "classnames/bind";
 import { useNavigate } from "react-router-dom";
 import styles from "./ImageCard.module.scss";
 const cx = classNames.bind(styles);
-function ImageCard({ artWork }) {
+function ImageCard({
+  artWork,
+  type = "Normal",
+  setShowEditArtwork,
+  setArtworkEditData,
+}) {
   const navigate = useNavigate();
 
   const handleClickImageCard = () => {
     navigate(`/pin/${artWork._id}`);
   };
 
+  const handleEditArtwork = (e) => {
+    e.stopPropagation();
+    setShowEditArtwork(true);
+    setArtworkEditData(artWork);
+  };
   return (
     <div className={cx("image-card")}>
       <img
@@ -30,17 +40,23 @@ function ImageCard({ artWork }) {
               )}
             ></i>
           </div>
-          <div
-            className={cx("more-options")}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <i
-              className={cx(
-                "fa-solid fa-ellipsis-vertical fa-rotate-90",
-                "icon"
-              )}
-            ></i>
-          </div>
+          {type === "Normal" ? (
+            <div
+              className={cx("more-options")}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <i
+                className={cx(
+                  "fa-solid fa-ellipsis-vertical fa-rotate-90",
+                  "icon"
+                )}
+              ></i>
+            </div>
+          ) : (
+            <div className={cx("edit-artwork")} onClick={handleEditArtwork}>
+              <i className={cx("fa-solid fa-pen", "icon")}></i>
+            </div>
+          )}
         </div>
       </div>
     </div>

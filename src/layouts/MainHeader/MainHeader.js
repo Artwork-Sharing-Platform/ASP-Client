@@ -207,11 +207,19 @@ function MainHeader({ onLogout, type = "Search" }) {
       )}
       <div className={cx("main-header-container")}>
         <div className={cx("header-left")}>
-          <Link to="/" className={cx("header-logo")}>
-            <div className={cx("logo")}>
-              <img src={Logo} alt="logo" className={cx("logo-img")} />
-            </div>
-          </Link>
+          {type === "Admin" ? (
+            <Link to="/admin" className={cx("header-logo")}>
+              <div className={cx("logo")}>
+                <img src={Logo} alt="logo" className={cx("logo-img")} />
+              </div>
+            </Link>
+          ) : (
+            <Link to="/" className={cx("header-logo")}>
+              <div className={cx("logo")}>
+                <img src={Logo} alt="logo" className={cx("logo-img")} />
+              </div>
+            </Link>
+          )}
 
           {type !== "Admin" && (
             <div className={cx("header-nav")}>
