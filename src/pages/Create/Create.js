@@ -57,6 +57,7 @@ function Create({ onLogout }) {
   const [showExtendPackage, setShowExtendPackage] = useState(false);
   const [showUpgradePackage, setShowUpgradePackage] = useState(false);
 
+  const [errorMessage, setErrorMessage] = useState("");
   const [extendPackageType, setExtendPackageType] = useState(
     "posting artwork with private"
   );
@@ -159,6 +160,9 @@ function Create({ onLogout }) {
   };
 
   const handlePublishPin = async () => {
+    if (errorMessage) {
+      setErrorMessage("");
+    }
     setLoadingPublish(true);
     if (
       (artWorkData.access === "private" || artWorkData.isCheckedAds) &&
@@ -260,7 +264,8 @@ function Create({ onLogout }) {
                 setUploadImagePreview(null);
               })
               .catch((error) => {
-                console.log(error);
+                setLoadingPublish(false);
+                setErrorMessage(error.response.data.message);
               });
           } catch (error) {
             setLoadingPublish(false);
@@ -321,6 +326,9 @@ function Create({ onLogout }) {
                 <div className={cx("title")}>Create Pin</div>
               </div>
               <div className={cx("content-right")}>
+                {errorMessage && (
+                  <div className={cx("error-msg")}>{errorMessage}</div>
+                )}
                 {showPublishBtn && (
                   <div
                     className={

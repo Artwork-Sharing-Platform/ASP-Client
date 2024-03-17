@@ -94,6 +94,14 @@
         }
 
         .content-right {
+          display: flex;
+          align-items: center;
+
+          .error-msg {
+            margin-right: 20px;
+            font-size: 14px;
+            color: red;
+          }
           .publish-action {
             display: flex;
             align-items: center;
