@@ -34,14 +34,18 @@ function PinRelated({ pinInformation }) {
 
   return (
     <>
-      <div className={cx("related-heading")}>More to explore</div>
-      <div className={cx("related-art-wrapper")}>
-        <div className={cx("related-art-container")}>
-          {artworks.map((art, index) => (
-            <ImageCard artWork={art} key={index} />
-          ))}
-        </div>
-      </div>
+      {artworks.length > 0 && (
+        <>
+          <div className={cx("related-heading")}>More to explore</div>
+          <div className={cx("related-art-wrapper")}>
+            <div className={cx("related-art-container")}>
+              {artworks.map((art, index) => (
+                <ImageCard artWork={art} key={index} />
+              ))}
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }
