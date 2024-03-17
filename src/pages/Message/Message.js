@@ -32,7 +32,7 @@ function Message({ onLogout }) {
   const [showImageViewer, setShowImageViewer] = useState(false);
 
   useEffect(() => {
-    socket.current = io("http://localhost:5000");
+    socket.current = io(process.env.REACT_APP_SERVER_URL);
     socket.current.on("getMessage", (data) => {
       setArrivalMessages({
         senderId: data.senderId,
