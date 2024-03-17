@@ -1,11 +1,71 @@
 .admin-wrapper {
   width: 100%;
   height: 100%;
+  overflow: hidden;
   .admin-container {
     width: 100%;
     height: calc(100vh - 80px);
     margin-top: 80px;
     display: flex;
     align-items: center;
+
+    .dashboard_container {
+      flex: 1;
+      height: 100%;
+      padding: 24px;
+
+      .dashboard_content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .daily-information {
+          width: 100%;
+          height: fit-content;
+          display: flex;
+          grid-template-columns: auto auto auto;
+          gap: 16px;
+        }
+
+        .chart_overview {
+          flex: 1;
+          margin-top: 20px;
+          display: flex;
+          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+          background-color: #fff;
+
+          .chart-total {
+            flex: 1;
+            padding: 16px;
+            border-right: 1px solid var(--border-color);
+
+            .chart-title {
+              font-size: 23px;
+              font-weight: 500;
+            }
+
+            .chart-data {
+              margin-top: 20px;
+              font-size: 25px;
+              font-weight: 500;
+            }
+          }
+
+          .chart-revenue-by-category {
+            flex: 1;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+
+            .title {
+              font-size: 23px;
+              font-weight: 500;
+            }
+          }
+        }
+      }
+    }
   }
 }

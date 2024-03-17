@@ -12,4 +12,14 @@ async function fetchUserData(userId, secretKey) {
   }
 }
 
-export { fetchUserData };
+async function fetchUserDataV2(userId) {
+  try {
+    const response = await api.get(`/user/getUserById/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+export { fetchUserData, fetchUserDataV2 };
