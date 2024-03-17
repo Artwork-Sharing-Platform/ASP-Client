@@ -194,7 +194,6 @@ function Create({ onLogout }) {
           }
         );
         const moderateContent = response.data.predictions;
-        console.log(moderateContent);
         if (moderateContent.adult > 50) {
           setArtWorkData({
             access: "public",
@@ -244,7 +243,6 @@ function Create({ onLogout }) {
             api
               .post("/art/postArtwork", postArtworkData)
               .then((response) => {
-                console.log(response.data);
                 setArtWorkData({
                   access: "public",
                   url: "",
