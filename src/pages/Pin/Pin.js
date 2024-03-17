@@ -7,7 +7,7 @@ import { AuthContext } from "~/contexts/AuthContext";
 
 import MainHeader from "~/layouts/MainHeader";
 import PinDetail from "~/components/Pin/PinDetail";
-// import PinRelated from "~/components/Pin/PinRelated";
+import PinRelated from "~/components/Pin/PinRelated";
 import ReportPin from "~/components/Pin/PinDetail/Top/MoreOptionsPin/ReportPin";
 import LoadingSpinner from "~/components/LoadingSpinner";
 import NoPackagePopup from "~/components/Popup/NoPackagePopup";
@@ -37,7 +37,7 @@ function Pin({ onLogout }) {
     useState(false);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 1);
   }, [location]);
 
   useEffect(() => {
@@ -119,7 +119,11 @@ function Pin({ onLogout }) {
                 setPackageDescType={setPackageDescType}
               />
             </div>
-            <div className={cx("pin-related-main")}></div>
+            <div className={cx("pin-related-main")}>
+              {pinInformation?.isCheckedSimilar && (
+                <PinRelated pinInformation={pinInformation && pinInformation} />
+              )}
+            </div>
           </div>
         )}
       </div>
