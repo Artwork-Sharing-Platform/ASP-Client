@@ -143,9 +143,9 @@ function Notifications({
                       )}
                       {(notify.type === "new_payment_package" ||
                         notify.type === "new_free_package" ||
-                        "new_report_artwork" ||
-                        "new_warning_artwork" ||
-                        "new_unlock_artwork") && (
+                        notify.type === "new_report_artwork" ||
+                        notify.type === "new_warning_artwork" ||
+                        notify.type === "new_unlock_artwork") && (
                         <i
                           className={cx("fa-sharp fa-solid fa-bell", "icon")}
                         ></i>
