@@ -159,9 +159,11 @@ function Create({ onLogout }) {
   };
 
   const handlePublishPin = async () => {
-    console.log(process.env.REACT_APP_MODERATION_URL);
     setLoadingPublish(true);
-    if (!userData.packageId) {
+    if (
+      (artWorkData.access === "private" || artWorkData.isCheckedAds) &&
+      !userData.packageId
+    ) {
       setLoadingPublish(false);
       setShowNoPackage(true);
     } else if (
