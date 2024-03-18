@@ -2,6 +2,7 @@ import classNames from "classnames/bind";
 import { useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
+import { AuthContext } from "~/contexts/AuthContext";
 import { fetchUserDataV2 } from "~/services/userService";
 
 import SideBar from "~/components/Admin/SideBar";
@@ -9,7 +10,6 @@ import NotFound from "~/components/NotFound";
 import MainHeader from "~/layouts/MainHeader";
 
 import styles from "./TransactionManagement.module.scss";
-import { AuthContext } from "~/contexts/AuthContext";
 const cx = classNames.bind(styles);
 function TransactionManagement({ onLogout }) {
   const { userData } = useContext(AuthContext);

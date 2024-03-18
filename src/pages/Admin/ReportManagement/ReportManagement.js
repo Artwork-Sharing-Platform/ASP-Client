@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { jwtDecode } from "jwt-decode";
 
 import api from "~/services/apiService";
+import { AuthContext } from "~/contexts/AuthContext";
 import { fetchUserDataV2 } from "~/services/userService";
 
 import SideBar from "~/components/Admin/SideBar";
@@ -14,7 +15,6 @@ import NotFound from "~/components/NotFound";
 import MainHeader from "~/layouts/MainHeader";
 
 import styles from "./ReportManagement.module.scss";
-import { AuthContext } from "~/contexts/AuthContext";
 const cx = classNames.bind(styles);
 function ReportManagement({ onLogout }) {
   const { userData } = useContext(AuthContext);

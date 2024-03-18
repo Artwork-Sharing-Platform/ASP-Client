@@ -3,6 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import { useContext, useEffect, useState } from "react";
 
 import { fetchUserDataV2 } from "~/services/userService";
+import { AuthContext } from "~/contexts/AuthContext";
 
 import SideBar from "~/components/Admin/SideBar";
 import NotFound from "~/components/NotFound";
@@ -12,7 +13,6 @@ import DoughnutChart from "~/components/Admin/Chart/DoughnutChart";
 
 import styles from "./Admin.module.scss";
 import Widget from "~/components/Admin/Widget";
-import { AuthContext } from "~/contexts/AuthContext";
 const cx = classNames.bind(styles);
 
 const colorData = (type) => {
