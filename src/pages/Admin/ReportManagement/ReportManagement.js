@@ -22,7 +22,6 @@ function ReportManagement({ onLogout }) {
   const [authorize, setAuthorize] = useState(true);
 
   useEffect(() => {
-    setAuthorize(false);
     const getUserData = async () => {
       try {
         const storedToken = localStorage.getItem("accessToken");
