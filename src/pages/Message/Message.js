@@ -2,6 +2,7 @@ import classNames from "classnames/bind";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
+import { ClipLoader } from "react-spinners";
 
 import { AuthContext } from "~/contexts/AuthContext";
 import { MessageContext } from "~/contexts/MessageContext";
@@ -30,6 +31,7 @@ function Message({ onLogout }) {
   const [currentChat, setCurrentChat] = useState(null);
   const [imageViewer, setImageViewer] = useState(null);
   const [showImageViewer, setShowImageViewer] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState(false);
 
   useEffect(() => {
     socket.current = io(process.env.REACT_APP_SERVER_URL);
@@ -74,6 +76,7 @@ function Message({ onLogout }) {
   }, [id]);
 
   useEffect(() => {
+    setLoadingMessage(true);
     if (currentChat) {
       const getMessages = async () => {
         try {
@@ -81,6 +84,7 @@ function Message({ onLogout }) {
             `/message/getMessage/${currentChat?._id}`
           );
           setMessages(messagesResponse.data);
+          setLoadingMessage(false);
         } catch (err) {
           console.log(err);
         }
@@ -108,15 +112,25 @@ function Message({ onLogout }) {
             setCurrentChat={setCurrentChat}
           />
           {currentChat ? (
-            <ChatBox
-              socket={socket}
-              currentUser={userData}
-              currentChat={currentChat}
-              messages={messages}
-              setMessages={setMessages}
-              setShowImageViewer={setShowImageViewer}
-              setImageViewer={setImageViewer}
-            />
+            loadingMessage ? (
+              <div className={cx("message-loading")}>
+                <ClipLoader
+                  size={40}
+                  color="#e60023"
+                  className={cx("loading-spinner")}
+                />
+              </div>
+            ) : (
+              <ChatBox
+                socket={socket}
+                currentUser={userData}
+                currentChat={currentChat}
+                messages={messages}
+                setMessages={setMessages}
+                setShowImageViewer={setShowImageViewer}
+                setImageViewer={setImageViewer}
+              />
+            )
           ) : (
             <div className={cx("no-message-box")}></div>
           )}
