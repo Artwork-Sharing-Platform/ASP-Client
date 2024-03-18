@@ -1,6 +1,6 @@
 import { Button, Table, Tag } from "antd";
 import classNames from "classnames/bind";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,10 +13,11 @@ import SideBar from "~/components/Admin/SideBar";
 import NotFound from "~/components/NotFound";
 import MainHeader from "~/layouts/MainHeader";
 
-
 import styles from "./ArtworkManagement.module.scss";
+import { AuthContext } from "~/contexts/AuthContext";
 const cx = classNames.bind(styles);
 function ArtworkManagement({ onLogout }) {
+  const { userData } = useContext(AuthContext);
   const columns = [
     {
       title: <div className={cx("column-title")}>Art Picture</div>,
@@ -92,9 +93,10 @@ function ArtworkManagement({ onLogout }) {
   ];
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [authorize, setAuthorize] = useState(false);
+  const [authorize, setAuthorize] = useState(true);
 
   useEffect(() => {
+    setAuthorize(false);
     const getUserData = async () => {
       try {
         const storedToken = localStorage.getItem("accessToken");
@@ -107,14 +109,13 @@ function ArtworkManagement({ onLogout }) {
           throw new Error("User ID not found in token");
         }
         const userData = await fetchUserDataV2(userId);
-        if (userData && userData.type !== "Admin") {
-          setAuthorize(true);
+        if (userData && userData.type === "Admin") {
+          setAuthorize(false);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
-
     getUserData();
   }, []);
 
@@ -191,7 +192,7 @@ function ArtworkManagement({ onLogout }) {
   return (
     <>
       {authorize ? (
-        <NotFound />
+        <div>{userData.type !== "Admin" && <NotFound />}</div>
       ) : (
         <div className={cx("artwork-management-wrapper")}>
           <MainHeader onLogout={onLogout} type="Admin" />

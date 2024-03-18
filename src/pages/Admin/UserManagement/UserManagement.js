@@ -18,9 +18,10 @@ const cx = classNames.bind(styles);
 
 function UserManagement({ onLogout }) {
   const { userData } = useContext(AuthContext);
-  const [authorize, setAuthorize] = useState(false);
+  const [authorize, setAuthorize] = useState(true);
 
   useEffect(() => {
+    setAuthorize(false);
     const getUserData = async () => {
       try {
         const storedToken = localStorage.getItem("accessToken");
@@ -33,14 +34,13 @@ function UserManagement({ onLogout }) {
           throw new Error("User ID not found in token");
         }
         const userData = await fetchUserDataV2(userId);
-        if (userData && userData.type !== "Admin") {
-          setAuthorize(true);
+        if (userData && userData.type === "Admin") {
+          setAuthorize(false);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
-
     getUserData();
   }, []);
   const columns = [
@@ -216,7 +216,7 @@ function UserManagement({ onLogout }) {
   return (
     <>
       {authorize ? (
-        <NotFound />
+        <div>{userData.type !== "Admin" && <NotFound />}</div>
       ) : (
         <div className={cx("user-management-wrapper")}>
           <MainHeader onLogout={onLogout} type="Admin" />

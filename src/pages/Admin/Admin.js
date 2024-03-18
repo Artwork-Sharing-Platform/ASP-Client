@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import { jwtDecode } from "jwt-decode";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { fetchUserDataV2 } from "~/services/userService";
 
@@ -12,6 +12,7 @@ import DoughnutChart from "~/components/Admin/Chart/DoughnutChart";
 
 import styles from "./Admin.module.scss";
 import Widget from "~/components/Admin/Widget";
+import { AuthContext } from "~/contexts/AuthContext";
 const cx = classNames.bind(styles);
 
 const colorData = (type) => {
@@ -35,6 +36,7 @@ const colorData = (type) => {
 };
 
 function Admin({ onLogout }) {
+  const { userData } = useContext(AuthContext);
   const [index, setIndex] = useState(0);
   const widgets = [
     {
@@ -87,9 +89,10 @@ function Admin({ onLogout }) {
       current: [45, 50, 52, 55, 58, 60],
     },
   ];
-  const [authorize, setAuthorize] = useState(false);
+  const [authorize, setAuthorize] = useState(true);
 
   useEffect(() => {
+    setAuthorize(false);
     const getUserData = async () => {
       try {
         const storedToken = localStorage.getItem("accessToken");
@@ -102,21 +105,20 @@ function Admin({ onLogout }) {
           throw new Error("User ID not found in token");
         }
         const userData = await fetchUserDataV2(userId);
-        if (userData && userData.type !== "Admin") {
-          setAuthorize(true);
+        if (userData && userData.type === "Admin") {
+          setAuthorize(false);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
-
     getUserData();
   }, []);
 
   return (
     <>
       {authorize ? (
-        <NotFound />
+        <div>{userData.type !== "Admin" && <NotFound />}</div>
       ) : (
         <div className={cx("admin-wrapper")}>
           <MainHeader onLogout={onLogout} type="Admin" />

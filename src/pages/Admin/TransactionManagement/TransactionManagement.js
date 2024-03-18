@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
 import { fetchUserDataV2 } from "~/services/userService";
@@ -9,11 +9,14 @@ import NotFound from "~/components/NotFound";
 import MainHeader from "~/layouts/MainHeader";
 
 import styles from "./TransactionManagement.module.scss";
+import { AuthContext } from "~/contexts/AuthContext";
 const cx = classNames.bind(styles);
 function TransactionManagement({ onLogout }) {
-  const [authorize, setAuthorize] = useState(false);
+  const { userData } = useContext(AuthContext);
+  const [authorize, setAuthorize] = useState(true);
 
   useEffect(() => {
+    setAuthorize(false);
     const getUserData = async () => {
       try {
         const storedToken = localStorage.getItem("accessToken");
@@ -26,21 +29,20 @@ function TransactionManagement({ onLogout }) {
           throw new Error("User ID not found in token");
         }
         const userData = await fetchUserDataV2(userId);
-        if (userData && userData.type !== "Admin") {
-          setAuthorize(true);
+        if (userData && userData.type === "Admin") {
+          setAuthorize(false);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
-
     getUserData();
   }, []);
 
   return (
     <>
       {authorize ? (
-        <NotFound />
+        <div>{userData.type !== "Admin" && <NotFound />}</div>
       ) : (
         <div className={cx("transaction-management-wrapper")}>
           <MainHeader onLogout={onLogout} type="Admin" />
