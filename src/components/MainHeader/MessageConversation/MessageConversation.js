@@ -1,4 +1,5 @@
 import classNames from "classnames/bind";
+import { ClipLoader } from "react-spinners";
 
 import Conversation from "./ConversationDetail";
 
@@ -6,6 +7,7 @@ import styles from "./MessageConversation.module.scss";
 const cx = classNames.bind(styles);
 function MessageConversation({
   userData,
+  loading,
   conversations,
   setShowMessage,
   unseenMessages,
@@ -37,17 +39,27 @@ function MessageConversation({
             />
           </div>
         </div>
-        <div className={cx("conversation-message-list")}>
-          {conversations.map((con) => (
-            <Conversation
-              key={con._id}
-              conversation={con}
-              currentUser={userData}
-              setShowMessage={setShowMessage}
-              unseenMessages={unseenMessages}
+        {loading ? (
+          <div className={cx("conversation-message-loading")}>
+            <ClipLoader
+              size={30}
+              color="#e60023"
+              className={cx("loading-spinner")}
             />
-          ))}
-        </div>
+          </div>
+        ) : (
+          <div className={cx("conversation-message-list")}>
+            {conversations.map((con) => (
+              <Conversation
+                key={con._id}
+                conversation={con}
+                currentUser={userData}
+                setShowMessage={setShowMessage}
+                unseenMessages={unseenMessages}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

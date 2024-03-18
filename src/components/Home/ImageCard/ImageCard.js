@@ -21,12 +21,7 @@ function ImageCard({
   };
   return (
     <div className={cx("image-card")}>
-      <img
-        loading="lazy"
-        src={artWork.url}
-        alt={`Artwork img`}
-        className={cx("image-item")}
-      />
+      <img src={artWork.url} alt={`Artwork img`} className={cx("image-item")} />
       <div className={cx("image-card-label")} onClick={handleClickImageCard}>
         <div className={cx("save-action")} onClick={(e) => e.stopPropagation()}>
           <button className={cx("save-btn")}>Save</button>

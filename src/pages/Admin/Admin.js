@@ -35,7 +35,6 @@ const colorData = (type) => {
 };
 
 function Admin({ onLogout }) {
-  const [authorize, setAuthorize] = useState(false);
   const [index, setIndex] = useState(0);
   const widgets = [
     {
@@ -88,6 +87,8 @@ function Admin({ onLogout }) {
       current: [45, 50, 52, 55, 58, 60],
     },
   ];
+  const [authorize, setAuthorize] = useState(false);
+
   useEffect(() => {
     const getUserData = async () => {
       try {

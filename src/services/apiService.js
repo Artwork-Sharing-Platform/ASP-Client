@@ -47,7 +47,7 @@ api.interceptors.response.use(
       } catch (error) {
         console.error("Error refreshing token:", error);
         TokenService.removeTokens();
-        window.location.href = "/login";
+        window.location.href = "/";
         return Promise.reject(error);
       }
     }

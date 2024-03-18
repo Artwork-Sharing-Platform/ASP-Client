@@ -90,6 +90,15 @@
       }
     }
 
+    .conversation-message-loading {
+      width: 100%;
+      height: calc(100% - 120px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff;
+    }
+
     .conversation-message-list {
       width: 100%;
       height: fit-content;

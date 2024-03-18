@@ -34,7 +34,7 @@ const headerNav = [
 ];
 function MainHeader({ onLogout, type = "Search" }) {
   const { userData } = useContext(AuthContext);
-  const { conversations } = useContext(MessageContext);
+  const { conversations, loading } = useContext(MessageContext);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -156,8 +156,7 @@ function MainHeader({ onLogout, type = "Search" }) {
 
   const handleNavItemClick = (path) => {
     if (path === "/") {
-      navigate(path);
-      window.location.reload();
+      window.location.href = path;
     }
     navigate(path);
   };
@@ -200,6 +199,7 @@ function MainHeader({ onLogout, type = "Search" }) {
       {showMessage && (
         <MessageConversation
           userData={userData}
+          loading={loading}
           conversations={conversations}
           setShowMessage={setShowMessage}
           unseenMessages={unseenMessages}

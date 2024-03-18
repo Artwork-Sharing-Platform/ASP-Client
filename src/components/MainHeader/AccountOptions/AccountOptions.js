@@ -73,10 +73,10 @@ function AccountOptions({ onLogout, packageName }) {
     api
       .post("/auth/logout", { refreshToken })
       .then((res) => {
+        logout();
         onLogout();
         TokenService.removeTokens();
         setFeature(null);
-        logout();
       })
       .catch((err) => {
         console.log(err);
