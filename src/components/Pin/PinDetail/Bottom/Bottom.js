@@ -155,22 +155,15 @@ function Bottom({
       },
       commentContent: inputComment,
     };
-    setInputComment("");
     api
       .post(`/comment/post`, commentData)
       .then((response) => {
+        setInputComment("");
         callApiGetAllComments();
       })
       .catch((error) => {
         console.log(error);
       });
-  };
-
-  const handleKeyDownComment = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSendComment();
-    }
   };
 
   const callApiGetAllComments = async () => {
@@ -207,6 +200,13 @@ function Bottom({
     } catch (error) {
       console.error(`Error fetching replies for comment ${commentId}:`, error);
       return 0;
+    }
+  };
+
+  const handleKeyDownComment = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendComment();
     }
   };
 

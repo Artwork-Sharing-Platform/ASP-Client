@@ -59,7 +59,7 @@ function Middle({
     setLoadingShowListComment(true);
     const fetchData = async () => {
       try {
-        const comments = await fetchGetCommentByArtId(pinInformation._id);
+        const comments = await fetchGetCommentByArtId(pinInformation?._id);
         const countTopLevelComments = comments.length;
 
         let countReplyComments = 0;
@@ -95,7 +95,7 @@ function Middle({
 
     fetchData();
   }, [
-    pinInformation._id,
+    pinInformation,
     setCountComment,
     setListComments,
     setLoadingShowListComment,

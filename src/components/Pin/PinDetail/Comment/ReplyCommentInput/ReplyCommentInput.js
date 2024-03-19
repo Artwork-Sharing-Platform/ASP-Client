@@ -53,10 +53,10 @@ function ReplyCommentInput({
       replyContent: replyContent,
     };
 
-    setReplyContent("");
     api
       .post(`/replyComment/post`, replyCommentData)
       .then((response) => {
+        setReplyContent("");
         setShowReplyComment(false);
         callApiGetAllReplyComments();
         callApiGetAllComments();
@@ -64,13 +64,6 @@ function ReplyCommentInput({
       .catch((error) => {
         console.log(error);
       });
-  };
-
-  const handleKeyDownReplyComment = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSendReplyComment();
-    }
   };
 
   const callApiGetAllReplyComments = async () => {
@@ -114,6 +107,13 @@ function ReplyCommentInput({
     } catch (error) {
       console.error(`Error fetching replies for comment ${commentId}:`, error);
       return 0;
+    }
+  };
+
+  const handleKeyDownReplyComment = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendReplyComment();
     }
   };
 
