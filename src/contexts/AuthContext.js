@@ -1,5 +1,7 @@
 import { createContext, useEffect, useReducer } from "react";
-import { fetchUserData } from "~/services/userService";
+import api from "~/services/apiService";
+import TokenService from "~/services/tokenService";
+import { decryptUserId } from "~/utils/hashUserId";
 
 const AuthContext = createContext();
 
@@ -30,7 +32,7 @@ const authReducer = (state, action) => {
   }
 };
 
-const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children, handleLogout }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   const setUserData = (data) => {
@@ -43,6 +45,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    handleLogout();
     dispatch({ type: "LOGOUT" });
     localStorage.removeItem("userId");
   };
@@ -51,9 +54,16 @@ const AuthProvider = ({ children }) => {
     const fetchData = async () => {
       try {
         if (state.userId) {
-          const secretKey = process.env.REACT_APP_SECRET_KEY_ENCODE;
-          const userData = await fetchUserData(state.userId, secretKey);
-          setUserData(userData);
+          try {
+            const secretKey = process.env.REACT_APP_SECRET_KEY_ENCODE;
+            const decodeUserId = decryptUserId(state.userId, secretKey);
+            const response = await api.get(`/user/getUserById/${decodeUserId}`);
+            const userData = response.data;
+            setUserData(userData);
+          } catch (error) {
+            logout();
+            TokenService.removeTokens();
+          }
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -61,6 +71,7 @@ const AuthProvider = ({ children }) => {
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.userId]);
 
   return (

@@ -183,7 +183,6 @@ function UserManagement({ onLogout }) {
           return user;
         });
       });
-      console.log("UnLock:", key);
     } catch (err) {
       console.log(err);
     }
@@ -207,7 +206,6 @@ function UserManagement({ onLogout }) {
           return user;
         });
       });
-      console.log("Lock:", key);
     } catch (err) {
       console.log(err);
     }
