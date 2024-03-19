@@ -91,6 +91,24 @@
         border-radius: 50%;
       }
     }
+
+    .input-container-disable {
+      user-select: none;
+      cursor: not-allowed;
+      flex: 1;
+      height: 56px;
+      border-radius: 25px;
+      padding: 8px 0 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border: 1px solid var(--hover-bg-icon);
+
+      .text {
+        color: var(--hover-bg-icon);
+      }
+    }
+
     .input-container {
       flex: 1;
       height: fit-content;

@@ -57,18 +57,20 @@ function Bottom({
 
   useEffect(() => {
     // Automatically resize the textarea when the content is changed
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height =
-        textareaRef.current.scrollHeight + "px";
+    if (pinInformation.isCheckedComment) {
+      if (textareaRef.current) {
+        textareaRef.current.style.height = "auto";
+        textareaRef.current.style.height =
+          textareaRef.current.scrollHeight + "px";
+      }
+      // Calculate the number of rows based on scrollHeight and clientHeight
+      const extraLines =
+        (textareaRef.current.scrollHeight - textareaRef.current.clientHeight) /
+        20;
+      const calculatedRows = Math.max(1, Math.ceil(extraLines));
+      setTextareaRows(calculatedRows);
     }
-    // Calculate the number of rows based on scrollHeight and clientHeight
-    const extraLines =
-      (textareaRef.current.scrollHeight - textareaRef.current.clientHeight) /
-      20;
-    const calculatedRows = Math.max(1, Math.ceil(extraLines));
-    setTextareaRows(calculatedRows);
-  }, [inputComment]);
+  }, [inputComment, pinInformation.isCheckedComment]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -276,29 +278,35 @@ function Bottom({
             className={cx("avatar")}
           />
         </div>
-        <div className={cx("input-container")}>
-          <textarea
-            className={cx("input")}
-            placeholder="Add a comment"
-            onChange={handleCommentChange}
-            onKeyDown={handleKeyDownComment}
-            value={inputComment}
-            rows={textareaRows}
-            ref={textareaRef}
-            autoFocus={true}
-            spellCheck={false}
-          ></textarea>
-          {inputComment !== "" && (
-            <div className={cx("send-comment-container")}>
-              <div
-                className={cx("send-comment-btn")}
-                onClick={handleSendComment}
-              >
-                <i className={cx("fa-solid fa-paper-plane-top", "icon")}></i>
+        {!pinInformation.isCheckedComment ? (
+          <div className={cx("input-container-disable")}>
+            <div className={cx("text")}>Add a comment</div>
+          </div>
+        ) : (
+          <div className={cx("input-container")}>
+            <textarea
+              className={cx("input")}
+              placeholder="Add a comment"
+              onChange={handleCommentChange}
+              onKeyDown={handleKeyDownComment}
+              value={inputComment}
+              rows={textareaRows}
+              ref={textareaRef}
+              autoFocus={true}
+              spellCheck={false}
+            ></textarea>
+            {inputComment !== "" && (
+              <div className={cx("send-comment-container")}>
+                <div
+                  className={cx("send-comment-btn")}
+                  onClick={handleSendComment}
+                >
+                  <i className={cx("fa-solid fa-paper-plane-top", "icon")}></i>
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
