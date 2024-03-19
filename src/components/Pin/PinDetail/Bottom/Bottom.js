@@ -155,10 +155,10 @@ function Bottom({
       },
       commentContent: inputComment,
     };
+    setInputComment("");
     api
       .post(`/comment/post`, commentData)
       .then((response) => {
-        setInputComment("");
         callApiGetAllComments();
       })
       .catch((error) => {

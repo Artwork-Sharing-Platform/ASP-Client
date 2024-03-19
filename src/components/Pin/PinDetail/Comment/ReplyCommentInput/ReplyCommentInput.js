@@ -53,10 +53,10 @@ function ReplyCommentInput({
       replyContent: replyContent,
     };
 
+    setReplyContent("");
     api
       .post(`/replyComment/post`, replyCommentData)
       .then((response) => {
-        setReplyContent("");
         setShowReplyComment(false);
         callApiGetAllReplyComments();
         callApiGetAllComments();
