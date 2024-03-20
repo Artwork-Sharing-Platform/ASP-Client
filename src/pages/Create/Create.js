@@ -247,6 +247,14 @@ function Create({ onLogout }) {
             api
               .post("/art/postArtwork", postArtworkData)
               .then((response) => {
+                toast.success("Post artwork successfully!", {
+                  position: "top-right",
+                  autoClose: 1500,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                });
                 setArtWorkData({
                   access: "public",
                   url: "",
