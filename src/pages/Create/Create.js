@@ -348,6 +348,7 @@ function Create({ onLogout }) {
                     <button
                       className={cx("publish-btn")}
                       onClick={handlePublishPin}
+                      disabled={searchTagValue === ""}
                     >
                       Publish
                     </button>
