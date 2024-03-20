@@ -348,11 +348,11 @@ function Create({ onLogout }) {
                     <button
                       className={cx("publish-btn")}
                       onClick={handlePublishPin}
-                      disabled={searchTagValue === ""}
+                      disabled={searchValue === ""}
                     >
                       Publish
                     </button>
-                    {loadingPublish && (
+                    {loadingPublish && searchValue !== "" && (
                       <div className={cx("publish-loading")}>
                         <ClipLoader
                           size={30}
