@@ -143,7 +143,7 @@ function UserManagement({ onLogout }) {
       try {
         const users = await api.get("/user/getListUser");
         const transformedData = users.data
-          .filter((user) => user._id !== userData._id)
+          .filter((user) => user.type !== "Admin")
           .map((user) => ({
             key: user._id,
             avatar: user.avatar,

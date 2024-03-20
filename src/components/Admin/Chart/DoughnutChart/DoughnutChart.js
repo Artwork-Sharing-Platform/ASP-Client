@@ -4,9 +4,7 @@ import Chart from "react-apexcharts";
 import styles from "./DoughnutChart.module.scss";
 const cx = classNames.bind(styles);
 
-function DoughnutChart() {
-  const series = [50, 75, 25];
-
+function DoughnutChart({ packageData }) {
   const options = {
     labels: ["Free", "Business", "Enterprise"],
     plotOptions: {
@@ -52,7 +50,7 @@ function DoughnutChart() {
         type="donut"
         width="500"
         height="450"
-        series={series}
+        series={packageData}
         options={options}
       />
     </div>
