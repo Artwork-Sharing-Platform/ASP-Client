@@ -122,7 +122,7 @@ function ArtworkManagement({ onLogout }) {
     setLoading(true);
     const getArt = async () => {
       try {
-        const arts = await api.get("/art/getArtwork");
+        const arts = await api.get("/admin/getArtwork");
         const enhancedArts = await Promise.all(
           arts.data.map(async (art) => {
             const userResponse = await api.get(
@@ -166,7 +166,7 @@ function ArtworkManagement({ onLogout }) {
 
   const handleUnlock = async (art) => {
     try {
-      const updatedArt = await api.post(`/art/updateArtworkStatus`, art);
+      const updatedArt = await api.post(`/admin/updateArtworkStatus`, art);
       toast.success("Update Successfully", {
         position: "top-right",
         autoClose: 500,

@@ -141,7 +141,7 @@ function UserManagement({ onLogout }) {
     setLoading(true);
     const getUser = async () => {
       try {
-        const users = await api.get("/user/getListUser");
+        const users = await api.get("/admin/getListUser");
         const transformedData = users.data
           .filter((user) => user.type !== "Admin")
           .map((user) => ({
@@ -172,7 +172,7 @@ function UserManagement({ onLogout }) {
     };
     try {
       const updatedUser = await api.post(
-        `/user/updateStatusUser/${userId}`,
+        `/admin/updateStatusUser/${userId}`,
         updateData
       );
       setData((prevUserData) => {
@@ -195,7 +195,7 @@ function UserManagement({ onLogout }) {
     };
     try {
       const updatedUser = await api.post(
-        `/user/updateStatusUser/${userId}`,
+        `/admin/updateStatusUser/${userId}`,
         updateData
       );
       setData((prevUserData) => {
