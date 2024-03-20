@@ -114,6 +114,22 @@ function Create({ onLogout }) {
 
     if (e.target.files.length === 1) {
       file = e.target.files[0];
+      const fileSize = file.size;
+      const maxSizeInBytes = 15 * 1000000;
+      if (fileSize > maxSizeInBytes) {
+        toast.error("This file is too large to be uploaded (less than 15MB)", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+        setUploadImagePreview(null);
+        setShowUploadInformation(false);
+        setShowPublishBtn(false);
+        return;
+      }
       url = URL.createObjectURL(file);
 
       if (uploadImagePreview) {
@@ -402,7 +418,7 @@ function Create({ onLogout }) {
                         <div className={cx("sub")}>
                           <div className={cx("text")}>
                             We recommend using high quality .jpg files less than
-                            20MB.
+                            15MB.
                           </div>
                         </div>
                         <input
