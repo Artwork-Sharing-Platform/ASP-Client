@@ -44,7 +44,7 @@ function Bottom({
     if (mouseIsOver) {
       timeout = setTimeout(() => {
         setShowReactions(true);
-      }, 500);
+      }, 300);
     } else {
       clearTimeout(timeout);
       setShowReactions(false);
