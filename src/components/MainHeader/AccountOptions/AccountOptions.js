@@ -153,7 +153,7 @@ function AccountOptions({ onLogout, packageName }) {
             <div className={cx("account-item-container-package")}>
               <div className={cx("text")}>Package feature</div>
               <div className={cx("dropdown")}>
-                <i className={cx("fa-solid fa-chevron-up", "icon")}></i>
+                <i className={cx("fa-solid fa-chevron-down", "icon")}></i>
               </div>
             </div>
           </div>
