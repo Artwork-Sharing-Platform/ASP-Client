@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 
 function DoughnutChart({ packageData }) {
   const options = {
-    labels: ["Free", "Business", "Enterprise"],
+    labels: ["Enterprise", "Business", "Free"],
     plotOptions: {
       pie: {
         expandOnClick: false,
