@@ -9,6 +9,13 @@
     display: flex;
     flex-direction: column;
 
+    .emojiPickerContainer {
+      position: absolute;
+      z-index: 10;
+      right: 00px;
+      bottom: 60px;
+    }
+
     .message-box-header {
       width: 100%;
       height: 70px;

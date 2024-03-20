@@ -8,11 +8,18 @@ import api from "~/services/apiService";
 import styles from "./MessageInput.module.scss";
 const cx = classNames.bind(styles);
 
-function MessageInput({ socket, currentUser, currentChat, setMessages }) {
+function MessageInput({
+  socket,
+  messageInputRef,
+  newMessage,
+  setNewMessage,
+  currentUser,
+  currentChat,
+  setMessages,
+  setShowEmoji,
+}) {
   const fileInputImageRef = useRef(null);
-  const messageInputRef = useRef(null);
   const { setConversations } = useContext(MessageContext);
-  const [newMessage, setNewMessage] = useState("");
   const [messageMedia, setMessageMedia] = useState(null);
   const [typeMessage, setTypeMessage] = useState("text");
   const [fileImageUpload, setFileImageUpload] = useState();
@@ -58,6 +65,7 @@ function MessageInput({ socket, currentUser, currentChat, setMessages }) {
   };
 
   const handleSendMessage = async () => {
+    setShowEmoji(false);
     const { _id: conversationId, members } = currentChat;
     const { _id: senderId } = currentUser;
 
@@ -130,6 +138,10 @@ function MessageInput({ socket, currentUser, currentChat, setMessages }) {
     }
   };
 
+  const handleClickEmoji = () => {
+    setShowEmoji((val) => !val);
+  };
+
   return (
     <div className={cx("message-box-footer")}>
       <div className={cx("option-input")}>
@@ -193,14 +205,17 @@ function MessageInput({ socket, currentUser, currentChat, setMessages }) {
           />
 
           <div className={cx("emoji")}>
-            <i className={cx("fa-regular fa-face-smile", "icon-emoji")}></i>
+            <i
+              className={cx("fa-regular fa-face-smile", "icon-emoji")}
+              onClick={handleClickEmoji}
+            ></i>
           </div>
         </div>
       </div>
       <button
         className={cx("send-chat")}
         onClick={handleSendMessage}
-        disabled={newMessage === "" || messageMedia === null}
+        disabled={newMessage === "" && messageMedia === null}
       >
         <i
           className={

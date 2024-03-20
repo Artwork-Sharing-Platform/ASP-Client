@@ -17,6 +17,7 @@
     "crypto-js": "^4.2.0",
     "date-fns": "^3.3.1",
     "dompurify": "^3.0.9",
+    "emoji-picker-react": "^4.9.2",
     "file-saver": "^2.0.5",
     "firebase": "^10.8.0",
     "jwt-decode": "^4.0.0",
